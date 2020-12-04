@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather</title>
+    <link rel="stylesheet" type="text/css" href="weather.css" />
+
+<body>
+<p>Weather Updates</p>
+
+<div class="weather" id="weatherWidget">
+	<div class="weather-loc" id='loc'><strong id="city"></strong><p id="state"></p></div>
+	<div class="weather-humidity" id = 'hum'></div>
+	<div class="weather-temp" id = 'temp'></div>
+	<img class="weather-tomorrow" id = 'img1' src = 'http://us.yimg.com/i/us/nws/weather/gr/0ds.png' alt = "couldn't load image"/>
+	<img class="weather-dayaftertomorrow" id = 'img2' src = 'http://us.yimg.com/i/us/nws/weather/gr/0ds.png' alt = "couldn't load image"/>
+	<br><br><br><br><br><br>
+</div>
+
+
+
+	<button onclick="fetchWeather()">Update</button>
+
+
+    <script>
+		const pathtoData = "https://classes.engineering.wustl.edu/cse330/content/weather_json.php"; 
+
+
+    function fetchWeather(){
+		const XMLHttp = new XMLHttpRequest(); 
+		XMLHttp.open('GET', pathtoData, true); 
+		XMLHttp.addEventListener('load', callbackweather, false); 
+		XMLHttp.send(null);  
+
+    }
+
+	function callbackweather(event){
+
+	var jsonData = JSON.parse(event.target.responseText);
+
+	var city = jsonData.location.city; 
+	var state = jsonData.location.state; 
+	var hum = jsonData.atmosphere.humidity; 
+	var temp = jsonData.current.temp; 
+	var tom = jsonData.tomorrow.code; 
+	var DA = jsonData.dayafter.code; 
+
+	var htmlParent = document.getElementById("weatherWidget");
+	var htmlLoc = document.getElementById("loc");
+	htmlLoc.innerHTML = null; 
+	var htmlHum = document.getElementById("hum");
+	htmlHum.innerHTML = null; 
+	var htmlTemp = document.getElementById("temp");
+	htmlTemp.innerHTML = null; 
+
+
+	// var htmlState = document.getElementById('state');
+	//i have to edit the HTML when i get it and set it to be null. 
+	
+	// // Make a <strong> tag, append the date string as its content, and then append it to the HTML element.
+	var htmlCity = document.createElement("strong");
+	htmlCity.appendChild(document.createTextNode(city));
+	htmlLoc.appendChild(htmlCity);
+	htmlLoc.append(", " + state); 
+
+	var htmlat = document.createElement("p"); 
+	htmlat.appendChild(document.createTextNode(hum)); 
+	htmlHum.appendChild(htmlat); 
+
+	var htmltmp = document.createElement("p"); 
+	htmltmp.appendChild(document.createTextNode(temp)); 
+	htmlTemp.appendChild(htmltmp); 
+
+	document.getElementById('img1').src = "http://us.yimg.com/i/us/nws/weather/gr/"+tom+"ds.png"; 
+	document.getElementById('img2').src = "http://us.yimg.com/i/us/nws/weather/gr/"+DA+"ds.png"; 
+
+
+}
+	//callback function
+	document.addEventListener("DOMContentLoaded", fetchWeather, false); // Bind the AJAX call to page load
+
+    
+
+
+    </script>
+
+
+</body>
+</html>

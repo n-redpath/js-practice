@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculator</title>
+</head>
+<body>
+    <!-- <form id="calcform" action=""> -->
+
+        <input type="text" id="a" name= "a">
+        <input type="text" id="b" name= "b">
+        <input type="radio" id = "add" name="calc" value="add">+
+        <input type="radio" id = "sub" name="calc" value="sub">-
+        <input type="radio" id = "mult" name="calc" value="mult">X
+        <input type="radio" id = "div" name="calc" value="div">/
+        <!-- <input type="submit" id = "go"> -->
+    <!-- </form> -->
+
+
+    <div id="result">
+    </div> 
+
+<script>
+document.getElementById("add").addEventListener("click", calculate, false);
+document.getElementById("sub").addEventListener("click", calculate, false);
+document.getElementById("mult").addEventListener("click", calculate, false);
+document.getElementById("div").addEventListener("click", calculate, false);
+
+function calculate(){
+    var a = parseFloat(document.getElementById("a").value); 
+    var b = parseFloat(document.getElementById("b").value);
+    var rad = document.getElementsByName("calc").value;  
+    var ans = 0; 
+    if (document.getElementById("add").checked){
+        ans = a+b; 
+    }
+    else if (document.getElementById("sub").checked){
+        ans = a-b; 
+    }
+    else if (document.getElementById("mult").checked){
+        ans = a*b; 
+    }
+    else {
+        if (b==0){
+            ans = "no dividing by zero!!"; 
+        }
+        else{
+            ans = a/b; 
+        }
+    }
+    // alert(ans); 
+
+    document.getElementById("result").innerHTML = ans; 
+
+};
+
+</script>
+
+
+</body>
+</html>
