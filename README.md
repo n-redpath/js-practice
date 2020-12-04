@@ -1,5 +1,5 @@
 # CSE330
-458234
+Javascript practice for creative programming and rapid prototype development course
 
 
 Calculator link:
